@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Inter, Poppins, Radio_Canada } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Providers from "./providers";
+import { Toaster } from "@/components/ui/sonner";
 
-const poppins = Poppins({ 
-  subsets: ["latin"] ,
+const poppins = Poppins({
+  subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-poppins"
 });
@@ -22,8 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.variable}>
-        <Navbar />
-        {children}
+        <Providers>
+          <Navbar />
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
