@@ -2,12 +2,13 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import { hash } from 'bcrypt';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: DatabaseService) { }
 
-  async create(userData: Prisma.UserCreateInput) {
+  async create(userData: UserDto) {
     const userEmail = await this.prisma.user.findUnique({
       where: {
         email: userData.email
