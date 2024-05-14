@@ -12,8 +12,12 @@ import {
 } from "@/components/ui/alert-dialog"
 import { RiDeleteBin6Line } from 'react-icons/ri'
 
+interface DeleteProps {
+    handleDelete: (postId: string) => void,
+    postId: string
+}
 
-const DeleteDiaryModal = () => {
+const DeleteDiaryModal = ({ handleDelete, postId }: DeleteProps) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger>
@@ -32,7 +36,9 @@ const DeleteDiaryModal = () => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                    <AlertDialogAction>
+                        <button className='text-red-600' onClick={() => handleDelete(postId)}>Delete</button>
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
