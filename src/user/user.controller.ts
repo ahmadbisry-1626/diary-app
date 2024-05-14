@@ -11,5 +11,5 @@ export class UserController {
   async getUserProfile(@Param('id') id: string) {
     return await this.userService.findById(id)
   }
-
+  
 }
