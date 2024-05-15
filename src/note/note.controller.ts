@@ -9,7 +9,7 @@ export class NoteController {
   constructor(private readonly noteService: NoteService) { }
 
   @Post()
-  create(@Body() createNoteDto: Prisma.NoteCreateInput) {
+  create(@Body() createNoteDto: CreateNoteDto) {
     return this.noteService.create(createNoteDto);
   }
 
@@ -30,6 +30,6 @@ export class NoteController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.noteService.remove(+id);
+    return this.noteService.remove(id);
   }
 }

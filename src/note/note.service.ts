@@ -6,20 +6,38 @@ import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class NoteService {
-  constructor(private prisma: DatabaseService) {}
+  constructor(private prisma: DatabaseService) { }
 
-  async create(createNoteDto: Prisma.NoteCreateInput) {
+  async create(createNoteDto: CreateNoteDto) {
+    const userId = await this.prisma.user.findUnique({
+      where: {
+        id: createNoteDto.userId
+      }
+    })
+
+    const postId = await this.prisma.post.findUnique({
+      where: {
+        id: createNoteDto.postId
+      }
+    })
+
+    if (!userId && !postId) {
+      throw new Error('User and Post not found');
+    }
+
     const newNote = await this.prisma.note.create({
       data: {
-        ...createNoteDto
+        ...createNoteDto,
+        userId: userId.id,
+        postId: postId.id
       }
     })
 
     return newNote;
   }
 
-  findAll() {
-    return `This action returns all note`;
+  async findAll() {
+    return await this.prisma.note.findMany()
   }
 
   findOne(id: number) {
@@ -30,7 +48,11 @@ export class NoteService {
     return `This action updates a #${id} note`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} note`;
+  async remove(id: string) {
+    return await this.prisma.note.delete({
+      where: {
+        id
+      }
+    })
   }
 }
