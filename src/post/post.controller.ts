@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseGuards } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('post')
 export class PostController {
@@ -11,19 +12,19 @@ export class PostController {
   async create(@Body(ValidationPipe) createPostDto: CreatePostDto) {
     return await this.postService.create(createPostDto);
   }
-
+  
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  async findAll() {
+    return await this.postService.findAll();
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(+id, updatePostDto);
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return await this.postService.update(id, updatePostDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.postService.remove(id);
   }
 }

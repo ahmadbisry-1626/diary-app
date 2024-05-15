@@ -28,13 +28,34 @@ export class PostService {
     return newPost;
   }
 
+  async update(id: string, updatePostDto: UpdatePostDto) {
+    const userId = await this.prisma.user.findUnique({
+      where: {
+        id: updatePostDto.userId
+      }
+    })
+
+    if (!userId) {
+      throw new Error('User not found')
+    }
+
+    const editPost = await this.prisma.post.update({
+      where: {
+        id
+      },
+      data: {
+        ...updatePostDto,
+        userId: userId.id
+      }
+    })
+
+    return editPost;
+  }
+
   async findAll() {
     return this.prisma.post.findMany()
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
-  }
 
   async remove(id: string) {
     return await this.prisma.post.delete({
