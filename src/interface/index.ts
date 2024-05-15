@@ -10,4 +10,6 @@ export interface Post {
     title: string;
     postBody: string;
     userId: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

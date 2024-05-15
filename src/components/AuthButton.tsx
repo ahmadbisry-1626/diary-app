@@ -13,7 +13,7 @@ const AuthButton = () => {
             {session && session.user ? (
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-4">
-                        <div className="bg-violet-600 p-2 px-4 rounded-full">
+                        <div className="bg-pink-400 p-2 px-4 rounded-full">
                             <span className="text-xl text-gray-50">{session.user.firstName.charAt(0)}</span>
                         </div>
 
@@ -26,10 +26,10 @@ const AuthButton = () => {
                     <DropdownProfile id={session.user.id} />
                 </div>
             ) : (
-                <>
+                <div className="flex gap-4">
                     <Link href="/api/auth/signin" className="px-4 py-2 rounded-[4px] hover:bg-gray-100">Sign In</Link>
                     <SingupForm />
-                </>
+                </div>
             )}
 
         </>

@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions)
 
   return (
-    <main className="flex min-h-screen flex-col items-center pt-40">
+    <main className="flex min-h-screen flex-col items-center pt-[120px]">
       <div className="wrapper flex flex-col gap-4">
         {session && session.user ? (
           <div className="flex items-start gap-6">
@@ -17,7 +17,7 @@ export default async function Home() {
 
             <div className="flex flex-col gap-4 w-full">
               <div className="flex items-center justify-between w-full">
-                <h1 className="text-3xl font-semibold">My Diary</h1>
+                <h1 className="text-3xl font-semibold">My Current Diary</h1>
                 <CreateDiaryModal />
               </div>
 

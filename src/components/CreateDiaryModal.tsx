@@ -28,6 +28,18 @@ const CreateDiaryModal = () => {
 
     const createPost = async () => {
 
+        if (!data.current.title || !data.current.postBody) {
+            return toast.error('Please fill in all fields')
+        }
+
+        if (data.current.title.length < 3 ) {
+            return toast.error('Title must be at least 3 characters')
+        }
+        
+        if(data.current.postBody.length < 10) {
+            return toast.error('Content must be at least 10 characters')
+        }
+
         try {
             const res = await fetch(Backend_URL + "/post", {
                 method: "POST",
@@ -65,8 +77,8 @@ const CreateDiaryModal = () => {
     return (
         <Dialog>
             <DialogTrigger className='w-full max-w-xs'>
-                <div className='flex items-center gap-2 border-2 border-gray-400 rounded-full px-4 h-[54px] focus-within:border-violet-700'>
-                    <ImPencil className='w-7 h-7 text-violet-700 -mr-1' />
+                <div className='flex items-center gap-2 border-2 border-gray-300 rounded-full px-4 h-[54px] focus-within:border-pink-500'>
+                    <ImPencil className='w-7 h-7 text-pink-500 -mr-1' />
                     <Input
                         className='border-none bg-transparent focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
                         placeholder='Write something...' />
@@ -76,22 +88,22 @@ const CreateDiaryModal = () => {
                 <DialogHeader>
                     <DialogTitle>Create a Diary</DialogTitle>
                     <div className='flex flex-col items-center justify-center gap-8 w-full'>
-                        <h1 className='font-semibold text-3xl mt-4'>Create Your <span className='text-violet-600'>Diary</span></h1>
+                        <h1 className='font-semibold text-3xl mt-4'>Create Your <span className='text-pink-500'>Diary</span></h1>
 
                         <div className='flex flex-col gap-3 w-full'>
                             <Input
                                 name='title'
                                 placeholder='Title'
-                                className="border-2 border-gray-400 rounded-[12px] h-[50px] focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 focus-within:border-violet-700"
+                                className="border-2 border-gray-400 rounded-[12px] h-[50px] focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 focus-within:border-pink-500"
                                 onChange={(e) => (data.current.title = e.target.value)}
                             />
                             <Textarea
                                 name='firstName'
                                 placeholder='Write something...'
-                                className='border-2 border-gray-400 rounded-[12px] h-[200px] focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 focus-within:border-violet-700'
+                                className='border-2 border-gray-400 rounded-[12px] h-[200px] focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 focus-within:border-pink-500'
                                 onChange={(e) => (data.current.postBody = e.target.value)}
                             />
-                            <Button className='bg-violet-600 hover:bg-violet-800 rounded-[12px]' onClick={createPost}>
+                            <Button className='bg-pink-500 hover:bg-pink-700 rounded-[12px]' onClick={createPost}>
                                 Create Diary
                             </Button>
                         </div>

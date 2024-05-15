@@ -21,7 +21,7 @@ const DeleteDiaryModal = ({ handleDelete, postId }: DeleteProps) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger>
-                <div className="flex items-center gap-2 group text-red-600 hover:text-red-800 transition duration-300">
+                <div className="flex items-center gap-2 group text-yellow-600 hover:text-yellow-800 transition duration-300">
                     <RiDeleteBin6Line className="w-5 h-5 group-hover:translate-x-1 transition duration-300" />
                     <span className=''>Delete</span>
                 </div>

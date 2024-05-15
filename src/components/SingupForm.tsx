@@ -25,7 +25,7 @@ type FormInput = {
 }
 
 
-
+  
 const SingupForm = () => {
     const [isVisible, setIsVisibile] = useState(false);
 
