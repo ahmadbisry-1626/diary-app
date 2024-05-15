@@ -25,7 +25,7 @@ type FormInput = {
 }
 
 
-  
+
 const SingupForm = () => {
     const [isVisible, setIsVisibile] = useState(false);
 
@@ -92,12 +92,14 @@ const SingupForm = () => {
 
     return (
         <Dialog>
-            <DialogTrigger className='px-4 py-2 rounded-[4px] hover:bg-violet-800 bg-violet-600 text-gray-50'>Sign up</DialogTrigger>
+            <DialogTrigger className='px-4 py-2 rounded-[4px] hover:bg-pink-600 bg-pink-400 text-gray-50'>
+                Sign up
+            </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Sign up</DialogTitle>
                     <div className='flex flex-col items-center justify-center gap-10 w-full'>
-                        <h1 className='font-semibold text-3xl mt-4'>Kanabagi <span className='text-violet-600'>Diary</span></h1>
+                        <h1 className='font-semibold text-3xl mt-4'>Kanabagi <span className='text-pink-500'>Diary</span></h1>
 
                         <div className='flex flex-col gap-3 w-full'>
                             <div className='flex gap-3'>
@@ -116,7 +118,7 @@ const SingupForm = () => {
                                 />
                             </div>
                             <div className='h-[50px] flex items-center px-4 border-2 border-gray-400 rounded-[12px]'>
-                                <MdEmail className='w-7 h-7 text-violet-600' />
+                                <MdEmail className='w-7 h-7 text-pink-500' />
 
                                 <Input
                                     required
@@ -130,7 +132,7 @@ const SingupForm = () => {
                             <div className='h-[50px] flex justify-between px-4 border-2 border-gray-400 rounded-[12px]'>
                                 <div className='flex items-center w-full'>
                                     <div className='w-7 h-7 flex items-center'>
-                                        <FaLock className='w-6 h-6 text-violet-600' />
+                                        <FaLock className='w-6 h-6 text-pink-500' />
                                     </div>
 
                                     <Input
@@ -160,7 +162,7 @@ const SingupForm = () => {
                                     Terms & Privacy Policy.
                                 </span>
                             </p>
-                            <Button className='bg-violet-600 hover:bg-violet-800 rounded-[12px]' onClick={register}>
+                            <Button className='bg-pink-500 hover:bg-pink-700 rounded-[12px]' onClick={register}>
                                 Sign up
                             </Button>
                         </div>

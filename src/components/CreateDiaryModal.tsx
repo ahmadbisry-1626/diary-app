@@ -22,7 +22,7 @@ type FormInput = {
     postBody: string;
     userId: string;
 }
-
+ 
 const CreateDiaryModal = () => {
     const { data: session } = useSession()
 

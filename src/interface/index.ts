@@ -13,3 +13,11 @@ export interface Post {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface Note {
+    id: string;
+    noteBody: string;
+    userId: string;
+    postId: string;
+    createdAt: Date
+}

@@ -27,9 +27,9 @@ export default async function Home() {
 
           </div>
         ): (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-4 pt-48">
             <h1 className="text-3xl font-semibold">Welcome to Kanabagi Diary</h1>
-            <p className="text-gray-500 text-center">Please sign in to see your diary</p>
+            <p className="text-gray-500 text-center">Please sign in to write your diary</p>
           </div>
         )}
       </div>

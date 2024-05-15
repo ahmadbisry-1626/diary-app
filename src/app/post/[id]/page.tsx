@@ -1,13 +1,15 @@
 "use client"
 
 
+import { fetchNotes } from '@/actions/note'
 import { deletePost, fetchPosts } from '@/actions/post'
+import CreateNoteForm from '@/components/CreateNoteForm'
 import DeleteDiaryModal from '@/components/DeleteDiaryModal'
 import EditDiaryModal from '@/components/EditDiaryModal'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
-import { Post } from '@/interface'
+import { Note, Post } from '@/interface'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { BiSend } from 'react-icons/bi'
@@ -26,6 +28,16 @@ const page = ({ params }: PostProps) => {
     const [post, setPost] = useState<Post[]>([]);
     const [postDelete, setPostDelete] = useState(post)
     const [noteVisible, setIsNoteVisible] = useState(false)
+    const [note, setIsNote] = useState<Note[]>([])
+
+    useEffect(() => {
+        const fetchNoteList = async () => {
+            const noteData = await fetchNotes()
+            setIsNote(noteData)
+        }
+
+        fetchNoteList()
+    }, [])
 
     useEffect(() => {
         const fetchPostList = async () => {
@@ -56,7 +68,7 @@ const page = ({ params }: PostProps) => {
                                 const formattedDate = date.toLocaleDateString('id-ID', options);
 
                                 return (
-                                    <div key={post.id} className='max-w-2xl'>
+                                    <div key={post.id} className='max-w-2xl w-full'>
                                         {post.userId === session.user.id ? (
                                             <div className='flex flex-col gap-4'>
                                                 <div className='flex flex-col gap-2'>
@@ -74,7 +86,9 @@ const page = ({ params }: PostProps) => {
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <FaRegStickyNote className="w-5 h-5 text-gray-500" />
-                                                            <span className="text-gray-500">12 Notes</span>
+                                                            <span className="text-gray-500">
+                                                                {note.filter((note) => note.postId === id).length} Note(s)
+                                                            </span>
                                                         </div>
 
                                                         <EditDiaryModal postTitle={post.title} postBody={post.postBody} postId={post.id} />
@@ -100,10 +114,7 @@ const page = ({ params }: PostProps) => {
                                                     }}>
                                                         Add some notes?
                                                     </button>
-                                                    <div className='flex flex-col items-end gap-2'>
-                                                        <Textarea placeholder='Type note...' className={`h-36 focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 rounded-[12px] border-gray-400 border-2 ${noteVisible ? 'opacity-100 mb-0' : 'opacity-0 h-0 -mb-20'} transition-all duration-300 focus-within:border-violet-600 `} />
-                                                        <Button className={`w-max rounded-[12px] ${noteVisible ? 'opacity-100' : 'opacity-0'}`}>Add note</Button>
-                                                    </div>
+                                                    <CreateNoteForm noteVisible={noteVisible} postId={id} userId={post.userId}/>
                                                 </div>
                                             </div>
                                         ) : (

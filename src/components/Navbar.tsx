@@ -42,7 +42,7 @@ const Navbar = () => {
                             </div>
                         ) : (
                             <div className='flex items-center gap-1'>
-                                <Link href="/" className='text-[14px] text-violet-600 font-medium'>
+                                <Link href="/" className='text-[14px] text-pink-500 font-medium'>
                                     Home
                                 </Link>
                                 <IoIosArrowForward className='w-5 h-5 ' />

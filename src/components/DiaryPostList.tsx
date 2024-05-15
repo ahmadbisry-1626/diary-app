@@ -5,17 +5,28 @@ import { FaCircle, FaRegCalendarAlt, FaRegStickyNote } from 'react-icons/fa'
 import EditDiaryModal from './EditDiaryModal'
 import DeleteDiaryModal from './DeleteDiaryModal'
 import { deletePost, fetchPosts } from '../actions/post';
-import { Post } from '@/interface'
+import { Note, Post } from '@/interface'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { Skeleton } from './ui/skeleton'
+import { fetchNotes } from '@/actions/note'
 
 const DiaryPostList = () => {
     const { data: session } = useSession()
 
     const [post, setPost] = useState<Post[]>([]);
     const [postDelete, setPostDelete] = useState(post)
+    const [note, setIsNote] = useState<Note[]>([])
+
+    useEffect(() => {
+        const fetchNoteList = async () => {
+            const noteData = await fetchNotes()
+            setIsNote(noteData)
+        }
+
+        fetchNoteList()
+    }, [])
 
     useEffect(() => {
         const fetchPostList = async () => {
@@ -44,7 +55,7 @@ const DiaryPostList = () => {
                         const formattedDate = date.toLocaleDateString('id-ID', options);
 
                         return (
-                            <div className="bg-gray-100 flex flex-col gap-2 p-6 rounded-[12px] shadow-sm w-full" key={post.id}>
+                            <div className="bg-gray-50 flex flex-col gap-2 p-6 rounded-[12px] shadow-sm w-full hover:shadow-md transition-all duration-300" key={post.id}>
                                 <Link href={`/post/${post.id}`} className="text-xl font-medium">{post.title}</Link>
                                 <p>{post.postBody}</p>
 
@@ -58,7 +69,9 @@ const DiaryPostList = () => {
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <FaRegStickyNote className="w-5 h-5 text-gray-500" />
-                                            <span className="text-gray-500">12 Notes</span>
+                                            <span className="text-gray-500">
+                                                {note.filter((note) => note.postId === post.id).length} Note(s)
+                                            </span>
                                         </div>
 
                                         <EditDiaryModal postTitle={post.title} postBody={post.postBody} postId={post.id} />
@@ -94,11 +107,11 @@ const DiaryPostList = () => {
                 </>
             )}
 
-            {post.filter((post) => post.userId === session?.user.id).length === 0 && (
+            {/* {post.filter((post) => post.userId === session?.user.id).length === 0 && (
                 <div className='flex items-center justify-center h-60 rounded-[12px] gap-4 bg-gray-200'>
                     <h1 className='text-3xl font-semibold'>No post found</h1>
                 </div>
-            )}
+            )} */}
 
         </div>
     )
