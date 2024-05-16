@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -16,6 +16,7 @@ import { Backend_URL } from '@/lib/constants'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { redirect } from 'next/navigation'
+import { useTheme } from 'next-themes'
 
 type FormInput = {
     title: string;
@@ -74,17 +75,31 @@ const CreateDiaryModal = () => {
         userId: ''
     })
 
+    const [mounted, setIsMounted] = useState(false);
+    const { resolvedTheme } = useTheme();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null; // Atau Anda bisa menampilkan loading state di sini
+    }
+
+    
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <Dialog>
             <DialogTrigger className='w-full max-w-xs'>
-                <div className='flex items-center gap-2 border-2 border-gray-300 rounded-full px-4 h-[54px] focus-within:border-pink-500'>
-                    <ImPencil className='w-7 h-7 text-pink-500 -mr-1' />
+                <div className={`flex items-center gap-2 border-2 border-gray-300 rounded-full px-4 md:h-[54px] h-[45px] focus-within:border-pink-500 ${isDark && 'bg-gray-50 border-none'}`}>
+                    <ImPencil className={`w-7 h-7 text-pink-500 -mr-1 ${isDark && '!text-black'}`} />
                     <Input
                         className='border-none bg-transparent focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
                         placeholder='Write something...' />
                 </div>
             </DialogTrigger>
-            <DialogContent className='!w-full max-w-[550px]'>
+            <DialogContent className={`!w-full max-w-[550px] ${isDark && 'border-none'}`}>
                 <DialogHeader>
                     <DialogTitle>Create a Diary</DialogTitle>
                     <div className='flex flex-col items-center justify-center gap-8 w-full'>

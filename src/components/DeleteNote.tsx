@@ -18,12 +18,16 @@ interface DeleteNoteProps {
 
 const DeleteNote = ({ noteId, handleDelete }: DeleteNoteProps) => {
 
+    const resolvedTheme = localStorage.getItem('theme')
+
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <AlertDialog>
             <AlertDialogTrigger className='text-red-600 hover:text-red-800'>
                 Delete note
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className={`${isDark && 'border-none'}`}>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>

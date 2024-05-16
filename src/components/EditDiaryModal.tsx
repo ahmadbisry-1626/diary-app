@@ -78,6 +78,11 @@ const EditDiaryModal = ({ postTitle, postBody, postId }: EditPostProps) => {
         postBody: `${postBody}`,
         userId: ''
     })
+
+    const resolvedTheme = localStorage.getItem('theme')
+
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <Dialog>
             <DialogTrigger>
@@ -86,7 +91,7 @@ const EditDiaryModal = ({ postTitle, postBody, postId }: EditPostProps) => {
                     <span className=''>Edit</span>
                 </div>
             </DialogTrigger>
-            <DialogContent className='!w-full max-w-[550px]'>
+            <DialogContent className={`!w-full max-w-[550px] ${isDark && 'border-none'}`}>
                 <DialogHeader>
                     <DialogTitle>Edit Diary</DialogTitle>
                     <div className='flex flex-col items-center justify-center gap-8 w-full'>

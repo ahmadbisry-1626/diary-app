@@ -6,13 +6,10 @@ import { deletePost, fetchPosts } from '@/actions/post'
 import CreateNoteForm from '@/components/CreateNoteForm'
 import DeleteDiaryModal from '@/components/DeleteDiaryModal'
 import EditDiaryModal from '@/components/EditDiaryModal'
-import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Textarea } from '@/components/ui/textarea'
 import { Note, Post } from '@/interface'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
-import { BiSend } from 'react-icons/bi'
 import { FaCircle, FaRegCalendarAlt, FaRegStickyNote } from 'react-icons/fa'
 import { toast } from 'sonner'
 
@@ -56,6 +53,10 @@ const page = ({ params }: PostProps) => {
         window.location.href = '/'
     }
 
+    const resolvedTheme = localStorage.getItem('theme')
+
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <div className='min-h-screen flex justify-center items-center wrapper pt-36'>
             {post.length > 0 ? (
@@ -73,20 +74,20 @@ const page = ({ params }: PostProps) => {
                                             <div className='flex flex-col gap-4'>
                                                 <div className='flex flex-col gap-2'>
                                                     <h1 className='text-xl font-medium'>{post.title}</h1>
-                                                    <p className='text-gray-500'>{post.postBody}</p>
+                                                    <p className={`text-gray-500 ${isDark && '!text-gray-400'}`}>{post.postBody}</p>
                                                 </div>
 
-                                                <div className='flex items-center justify-between mt-4'>
-                                                    <div className='flex items-center gap-6'>
+                                                <div className='flex md:items-center items-end md:justify-between mt-4'>
+                                                    <div className='flex items-center gap-6 flex-wrap'>
                                                         <div className="flex items-center gap-2">
-                                                            <FaRegCalendarAlt className="w-5 h-5 text-gray-500" />
-                                                            <span className="text-gray-500">
+                                                            <FaRegCalendarAlt className={`w-5 h-5 text-gray-500 ${isDark && '!text-gray-400'}`} />
+                                                            <span className={`text-gray-500 ${isDark && '!text-gray-400'}`}>
                                                                 {formattedDate}
                                                             </span>
                                                         </div>
                                                         <div className="flex items-center gap-2">
-                                                            <FaRegStickyNote className="w-5 h-5 text-gray-500" />
-                                                            <span className="text-gray-500">
+                                                            <FaRegStickyNote className={`w-5 h-5 text-gray-500 ${isDark && '!text-gray-400'}`} />
+                                                            <span className={`text-gray-500 ${isDark && '!text-gray-400'}`}>
                                                                 {note.filter((note) => note.postId === id).length} Note(s)
                                                             </span>
                                                         </div>
@@ -97,14 +98,14 @@ const page = ({ params }: PostProps) => {
 
                                                     {post.updatedAt !== post.createdAt && (
                                                         <div className='flex items-center gap-2'>
-                                                            <span className='text-gray-500'>Edited</span>
-                                                            <FaCircle className='w-2 h-2 text-gray-400' />
+                                                            <span className={`text-gray-500 ${isDark && '!text-gray-400'}`}>Edited</span>
+                                                            <FaCircle className={`w-2 h-2 text-gray-400 ${isDark && '!text-gray-400'}`} />
                                                         </div>
                                                     )}
                                                 </div>
 
                                                 <div className='flex flex-col gap-2'>
-                                                    <Separator className='bg-gray-400' />
+                                                    <Separator className={`bg-gray-400 ${isDark && '!text-gray-400'}`} />
                                                     <button className='w-max z-20 font-medium hover:text-gray-500 transition duration-300' onClick={() => {
                                                         if (!noteVisible) {
                                                             setIsNoteVisible(true)

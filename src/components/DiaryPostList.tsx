@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { Skeleton } from './ui/skeleton'
 import { fetchNotes } from '@/actions/note'
+import { useTheme } from 'next-themes'
 
 const DiaryPostList = () => {
     const { data: session } = useSession()
@@ -45,6 +46,36 @@ const DiaryPostList = () => {
         window.location.reload()
     }
 
+    const [mounted, setIsMounted] = useState(false);
+    const { resolvedTheme } = useTheme();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return (
+            <>
+                {[0, 1, 2].map((index) => (
+                    <Skeleton key={index} className="bg-gray-200 flex flex-col gap-2 p-6 rounded-[12px] shadow-sm w-full mt-[18px]">
+                        <Skeleton className="w-30 h-6 bg-gray-100" />
+                        <Skeleton className="w-30 h-10 bg-gray-100" />
+
+                        <div className="flex items-center gap-6 pt-6">
+                            <Skeleton className="w-40 h-6 bg-gray-100" />
+                            <Skeleton className="w-30 h-6 bg-gray-100" />
+                            <Skeleton className="w-20 h-6 bg-gray-100" />
+                            <Skeleton className="w-20 h-6 bg-gray-100" />
+                        </div>
+                    </Skeleton>
+                ))}
+            </>
+        )
+    }
+
+
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <div className='flex flex-col gap-4'>
             {post.length > 0 ? (
@@ -55,12 +86,14 @@ const DiaryPostList = () => {
                         const formattedDate = date.toLocaleDateString('id-ID', options);
 
                         return (
-                            <div className="bg-gray-50 flex flex-col gap-2 p-6 rounded-[12px] shadow-sm w-full hover:shadow-md transition-all duration-300" key={post.id}>
-                                <Link href={`/post/${post.id}`} className="text-xl font-medium">{post.title}</Link>
-                                <p>{post.postBody}</p>
+                            <div className={`bg-gray-50 flex flex-col gap-2 p-6 rounded-[12px] shadow-sm w-full hover:shadow-md transition-all duration-300 ${isDark && 'bg-gradient-to-l from-zinc-900 to-zinc-800'}`} key={post.id}>
+                                <Link href={`/post/${post.id}`} className="md:text-xl text-lg font-medium">
+                                    {post.title}
+                                </Link>
+                                <p className={`${isDark && 'text-gray-400'}`}>{post.postBody}</p>
 
-                                <div className="flex items-center justify-between gap-6 pt-6">
-                                    <div className='flex items-center gap-6'>
+                                <div className="flex md:items-center items-end md:justify-between gap-6 pt-6">
+                                    <div className='flex items-center gap-6 flex-wrap'>
                                         <div className="flex items-center gap-2">
                                             <FaRegCalendarAlt className="w-5 h-5 text-gray-500" />
                                             <span className="text-gray-500">

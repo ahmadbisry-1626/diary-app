@@ -9,6 +9,7 @@ import { Note } from '@/interface'
 import { deleteNote, fetchNotes } from '@/actions/note'
 import { FaRegCalendarAlt, FaRegStickyNote } from 'react-icons/fa'
 import DeleteNote from './DeleteNote'
+import { useTheme } from 'next-themes'
 
 interface CreateNoteProps {
     noteVisible: boolean
@@ -44,6 +45,14 @@ const CreateNoteForm = ({ noteVisible, postId, userId }: CreateNoteProps) => {
     }
 
     const createNote = async () => {
+        if (!data.current.noteBody) {
+            return toast.error('Note body cannot be empty')
+        }
+
+        if(data.current.noteBody.length < 5) {
+            return toast.error('Note body must be at least 5 characters')
+        }
+
         try {
             const res = await fetch(Backend_URL + "/note", {
                 method: "POST",
@@ -77,14 +86,28 @@ const CreateNoteForm = ({ noteVisible, postId, userId }: CreateNoteProps) => {
         postId: ""
     })
 
+    const [mounted, setIsMounted] = useState(false);
+    const { resolvedTheme } = useTheme();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null; // Atau Anda bisa menampilkan loading state di sini
+    }
+
+
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <>
             <div className='flex flex-col items-end gap-2'>
                 <Textarea
                     placeholder='Type note...'
-                    className={`h-36 focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 rounded-[12px] border-gray-400 border-2 ${noteVisible ? 'opacity-100 mb-0' : 'opacity-0 h-0 -mb-20'} transition-all duration-300 focus-within:border-pink-500 `}
+                    className={`h-36 focus-visible:ring-transparent focus-visible:ring-0 focus-visible:ring-offset-0 rounded-[12px] border-gray-400 border-2 ${noteVisible ? 'opacity-100 mb-0' : 'opacity-0 h-0 -mb-20'} transition-all duration-300 focus-within:border-pink-500 ${isDark && 'border-none bg-gray-50 text-black placeholder:text-gray-500'}`}
                     onChange={(e) => (data.current.noteBody = e.target.value)} />
-                <Button className={`w-max rounded-[12px] bg-pink-400 hover:bg-pink-600 z-30 ${noteVisible ? 'opacity-100 mb-10' : 'opacity-0'}`} onClick={createNote}>
+                <Button className={`w-max rounded-[12px] bg-pink-400 hover:bg-pink-600 z-30 ${noteVisible ? 'opacity-100 mb-10' : 'opacity-0'} ${isDark && '!bg-gray-50 hover:!bg-gray-400'}`} onClick={createNote}>
                     Add note
                 </Button>
             </div>
@@ -98,13 +121,13 @@ const CreateNoteForm = ({ noteVisible, postId, userId }: CreateNoteProps) => {
                         const formattedDate = date.toLocaleDateString('id-ID', options);
                         return (
 
-                            <div key={note.id} className='bg-gray-50 shadow-sm hover:shadow-md transition-all duration-300 rounded-[12px] p-4 flex flex-col gap-6'>
+                            <div key={note.id} className={`bg-gray-50 shadow-sm hover:shadow-md transition-all duration-300 rounded-[12px] p-4 flex flex-col gap-6 ${isDark && '!bg-gradient-to-r !from-zinc-900 !to-zinc-800'}`}>
                                 <div className='flex items-start gap-4'>
-                                    <FaRegStickyNote className="w-6 h-6 text-gray-700" />
-                                    <h2 className='text-gray-700 w-full'>{note.noteBody}</h2>
+                                    <FaRegStickyNote className={`w-6 h-6 text-gray-700 ${isDark && '!text-gray-50'}`} />
+                                    <h2 className={`text-gray-700 w-full ${isDark && '!text-gray-50'}`}>{note.noteBody}</h2>
                                 </div>
 
-                                <div className="flex items-center gap-6 ml-10">
+                                <div className="flex items-center md:gap-6 gap-4 ml-10 flex-wrap">
                                     <div className='flex items-center gap-[6px]'>
                                         <span className='text-gray-400'>Added at  </span>
                                         <span className="text-gray-400">

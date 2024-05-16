@@ -18,6 +18,11 @@ interface DeleteProps {
 }
 
 const DeleteDiaryModal = ({ handleDelete, postId }: DeleteProps) => {
+
+    const resolvedTheme = localStorage.getItem('theme')
+
+    const isDark = resolvedTheme === 'dark'
+
     return (
         <AlertDialog>
             <AlertDialogTrigger>
@@ -26,7 +31,7 @@ const DeleteDiaryModal = ({ handleDelete, postId }: DeleteProps) => {
                     <span className=''>Delete</span>
                 </div>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className={`${isDark && 'border-none'}`}>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>

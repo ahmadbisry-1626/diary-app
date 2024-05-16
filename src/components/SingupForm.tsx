@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -15,6 +15,7 @@ import { FaEye, FaEyeSlash, FaLock } from 'react-icons/fa'
 import { Button } from './ui/button'
 import { Backend_URL } from '@/lib/constants'
 import { toast } from "sonner"
+import { useTheme } from 'next-themes'
 
 
 type FormInput = {
@@ -90,12 +91,26 @@ const SingupForm = () => {
         password: ""
     })
 
+    const [mounted, setIsMounted] = useState(false);
+    const { resolvedTheme } = useTheme();
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null; // Atau Anda bisa menampilkan loading state di sini
+    }
+
+    const isDark = resolvedTheme === 'dark'
+
+
     return (
         <Dialog>
-            <DialogTrigger className='px-4 py-2 rounded-[4px] hover:bg-pink-600 bg-pink-400 text-gray-50'>
+            <DialogTrigger className={`px-4 py-2 rounded-[4px] hover:bg-pink-600 bg-pink-400 text-gray-50 ${isDark && '!bg-black hover:!bg-gray-800'}`}>
                 Sign up
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className={`${isDark && 'border-gray-50 border-2'}`}>
                 <DialogHeader>
                     <DialogTitle>Sign up</DialogTitle>
                     <div className='flex flex-col items-center justify-center gap-10 w-full'>
