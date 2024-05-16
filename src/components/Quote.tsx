@@ -15,7 +15,7 @@ const Quote = () => {
 
     if (!mounted) {
         return (
-            <div className="flex flex-col gap-4 w-full max-w-xs pt-2">
+            <div className="flex max-lg:hidden flex-col gap-4 w-full max-w-xs pt-2">
                 <BsFillChatSquareQuoteFill className={`w-12 h-12 text-zinc-700`} />
                 <Skeleton className={`bg-gray-300 flex flex-col h-[150px] gap-2 justify-center shadow-sm p-6 w-full max-w-xs rounded-[12px]`} />
             </div>

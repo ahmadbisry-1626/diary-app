@@ -3,6 +3,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import CreateDiaryModal from "@/components/CreateDiaryModal";
 import DiaryPostList from "@/components/DiaryPostList";
 import Quote from "@/components/Quote";
+import AuthButtonMobile from "@/components/AuthButtonMobile";
 
 export default async function Home() {
   const session = await getServerSession(authOptions)
@@ -26,10 +27,12 @@ export default async function Home() {
             </div>
 
           </div>
-        ): (
-          <div className="flex flex-col items-center gap-4 pt-48">
-            <h1 className="text-3xl font-semibold">Welcome to Kanabagi Diary</h1>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-4 pt-48">
+            <h1 className="text-3xl font-semibold text-center">Welcome to Kanabagi Diary</h1>
             <p className="text-gray-500 text-center">Please sign in to write your diary</p>
+
+            <AuthButtonMobile />
           </div>
         )}
       </div>

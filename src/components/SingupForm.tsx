@@ -110,7 +110,7 @@ const SingupForm = () => {
             <DialogTrigger className={`px-4 py-2 rounded-[4px] hover:bg-pink-600 bg-pink-400 text-gray-50 ${isDark && '!bg-black hover:!bg-gray-800'}`}>
                 Sign up
             </DialogTrigger>
-            <DialogContent className={`${isDark && 'border-gray-50 border-2'}`}>
+            <DialogContent className={`${isDark && 'border-none'}`}>
                 <DialogHeader>
                     <DialogTitle>Sign up</DialogTitle>
                     <div className='flex flex-col items-center justify-center gap-10 w-full'>
