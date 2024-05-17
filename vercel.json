@@ -1,7 +1,9 @@
 {
     "version": 2,
     "env": {
-        "MONGO_URI": "@DATABASE_URL"
+        "DATABASE_URL": "@DATABASE_URL",
+        "jwtSecretKey": "@jwtSecretKey",
+        "jwtRefreshTokenKey": "@jwtRefreshTokenKey"
     },
     "builds": [
         {
