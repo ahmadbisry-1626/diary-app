@@ -1,5 +1,10 @@
 {
     "version": 2,
+    "env": {
+        "DATABASE_URL": "@DATABASE_URL",
+        "jwtSecretKey": "@jwtSecretKey",
+        "jwtRefreshTokenKey": "@jwtRefreshTokenKey"
+    },
     "builds": [
         {
             "src": "src/main.ts",
