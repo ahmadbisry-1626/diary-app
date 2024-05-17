@@ -29,7 +29,7 @@ const Navbar = () => {
 
     if (!mounted) {
         return (
-            <Skeleton className={`fixed z-30 p-4 bg-gradient-to-r from-zinc-900 to-zinc-800 h-[100px] bg-[] w-full shadow-sm`} />
+            <Skeleton className={`fixed z-30 p-4 bg-gradient-to-r from-zinc-900 to-zinc-800 h-[100px] rounded-none w-full shadow-sm`} />
         )
     }
 

@@ -9,6 +9,7 @@ import EditDiaryModal from '@/components/EditDiaryModal'
 import { Separator } from '@/components/ui/separator'
 import { Note, Post } from '@/interface'
 import { useSession } from 'next-auth/react'
+import { useTheme } from 'next-themes'
 import React, { useEffect, useState } from 'react'
 import { FaCircle, FaRegCalendarAlt, FaRegStickyNote } from 'react-icons/fa'
 import { toast } from 'sonner'
@@ -53,7 +54,7 @@ const page = ({ params }: PostProps) => {
         window.location.href = '/'
     }
 
-    const resolvedTheme = localStorage.getItem('theme')
+    const { resolvedTheme} = useTheme()
 
     const isDark = resolvedTheme === 'dark'
 
